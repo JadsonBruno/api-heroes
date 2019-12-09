@@ -1,5 +1,6 @@
 const assert = require("assert");
-const MongoDB = require("./../db/strategies/mongodb");
+const MongoDB = require("./../db/strategies/mongodb/mongodb");
+const HeroSchema = require("./../db/strategies/mongodb/schemas/heroesSchema");
 const Context = require("./../db/strategies/base/contextStrategy");
 
 const MOCK_HERO_CREATE = { name: "Wonder woman", power: "Lasso of Truth" };
@@ -7,10 +8,11 @@ const MOCK_HERO_UPDATE = { name: "Green Arrow", power: "Archery" };
 
 let MOCK_HERO_ID = "";
 
-const context = new Context(new MongoDB());
+let context = {};
 describe("MongoDB Strategy", function() {
   this.beforeAll(async () => {
-    await context.connect();
+    const connection = MongoDB.connect();
+    context = new Context(new MongoDB(connection, HeroSchema));
     const result = await context.create(MOCK_HERO_UPDATE);
     MOCK_HERO_ID = result._id;
   });
