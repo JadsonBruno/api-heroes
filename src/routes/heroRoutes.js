@@ -15,6 +15,9 @@ class HeroRoutes extends BaseRoute {
       path: "/heroes",
       method: "GET",
       config: {
+        tags: ["api"],
+        description: "Should list the heroes",
+        notes: "Can page results and apply filters",
         validate: {
           failAction,
           query: {
@@ -48,6 +51,9 @@ class HeroRoutes extends BaseRoute {
       path: "/heroes",
       method: "POST",
       config: {
+        tags: ["api"],
+        description: "Should create a hero",
+        notes: "Should create a hero by name and power",
         validate: {
           failAction,
           payload: {
@@ -83,6 +89,9 @@ class HeroRoutes extends BaseRoute {
       path: "/heroes/{id}",
       method: "PATCH",
       config: {
+        tags: ["api"],
+        description: "Should update a hero by id",
+        notes: "Can update any field",
         validate: {
           params: {
             id: Joi.string().required()
@@ -123,6 +132,9 @@ class HeroRoutes extends BaseRoute {
       path: "/heroes/{id}",
       method: "DELETE",
       config: {
+        tags: ["api"],
+        description: "Should delete a hero by id",
+        notes: "ID must be valid",
         validate: {
           failAction,
           params: {

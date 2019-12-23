@@ -51,7 +51,7 @@ describe("API Heroes test suite", function() {
   });
 
   it("should filter heroes return by name", async () => {
-    const NAME = "Batman";
+    const NAME = MOCK_INITIAL_HERO.name;
     const result = await app.inject({
       method: "GET",
       url: `/heroes?skip=0&limit=10&name=${NAME}`
