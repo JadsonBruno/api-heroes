@@ -17,7 +17,6 @@ async function main() {
   const context = new Context(new MongoDB(connection, HeroSchema));
 
   app.route([...mapRoutes(new HeroRoute(context), HeroRoute.methods())]);
-
   await app.start();
   console.log("server running at", app.info.port);
 
