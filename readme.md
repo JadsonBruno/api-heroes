@@ -17,3 +17,5 @@ To start the Hapi server, run the following
 ````
 	npm run prod
 ````
+### Login
+The default username is **" joseph "** and the default password is **" 12345 "**.
