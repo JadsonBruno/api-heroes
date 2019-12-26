@@ -9,7 +9,7 @@ const MOCK_HERO_UPDATE = { name: "Green Arrow", power: "Archery" };
 let MOCK_HERO_ID = "";
 
 let context = {};
-describe("MongoDB Strategy", function() {
+describe.only("MongoDB Strategy", function() {
   this.beforeAll(async () => {
     const connection = MongoDB.connect();
     context = new Context(new MongoDB(connection, HeroSchema));

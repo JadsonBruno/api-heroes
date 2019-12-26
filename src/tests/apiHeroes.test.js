@@ -12,12 +12,20 @@ const MOCK_INITIAL_HERO = {
   power: "Axes"
 };
 
+const TOKEN =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Impvc2VwaCIsImlkIjoxLCJpYXQiOjE1NzcxMjgzMTB9.Btj0q8OJDA1A4wRLX0RMRwgCf44dVht-QqWvJVPw4r0";
+
+const headers = {
+  authorization: TOKEN
+};
+
 let MOCK_ID = "";
 describe("API Heroes test suite", function() {
   this.beforeAll(async () => {
     app = await api;
     const result = await app.inject({
       method: "POST",
+      headers,
       url: "/heroes",
       payload: JSON.stringify(MOCK_INITIAL_HERO)
     });
@@ -28,6 +36,7 @@ describe("API Heroes test suite", function() {
   it("should list the heroes", async () => {
     const result = await app.inject({
       method: "GET",
+      headers,
       url: "/heroes?skip=0&limit=0"
     });
     const statusCode = result.statusCode;
@@ -40,6 +49,7 @@ describe("API Heroes test suite", function() {
     const SIZE_LIMIT = 3;
     const result = await app.inject({
       method: "GET",
+      headers,
       url: `/heroes?skip=0&limit=${SIZE_LIMIT}`
     });
 
@@ -54,6 +64,7 @@ describe("API Heroes test suite", function() {
     const NAME = MOCK_INITIAL_HERO.name;
     const result = await app.inject({
       method: "GET",
+      headers,
       url: `/heroes?skip=0&limit=10&name=${NAME}`
     });
 
@@ -67,6 +78,7 @@ describe("API Heroes test suite", function() {
   it("should create a hero", async () => {
     const result = await app.inject({
       method: "POST",
+      headers,
       url: "/heroes",
       payload: MOCK_HERO_CREATE
     });
@@ -86,6 +98,7 @@ describe("API Heroes test suite", function() {
 
     const result = await app.inject({
       method: "PATCH",
+      headers,
       url: `/heroes/${_id}`,
       payload: JSON.stringify(expected)
     });
@@ -101,6 +114,7 @@ describe("API Heroes test suite", function() {
     const _id = MOCK_ID;
     const result = await app.inject({
       method: "DELETE",
+      headers,
       url: `/heroes/${_id}`
     });
     const statusCode = result.statusCode;
@@ -114,6 +128,7 @@ describe("API Heroes test suite", function() {
     const _id = "5bfdb6e83f66ad3c32939fb1";
     const result = await app.inject({
       method: "DELETE",
+      headers,
       url: `/heroes/${_id}`
     });
     const statusCode = result.statusCode;
@@ -131,6 +146,7 @@ describe("API Heroes test suite", function() {
     const _id = "invalid id";
     const result = await app.inject({
       method: "DELETE",
+      headers,
       url: `/heroes/${_id}`
     });
     const statusCode = result.statusCode;

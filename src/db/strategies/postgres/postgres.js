@@ -33,8 +33,9 @@ class Postgres extends ICrud {
     return this._schema.findAll({ where: item, raw: true });
   }
 
-  async update(id, item) {
-    return this._schema.update(item, { where: { id: id } });
+  async update(id, item, upsert = false) {
+    const fn = upsert ? "upsert" : "update";
+    return this._schema[fn](item, { where: { id: id } });
   }
 
   async delete(id) {
@@ -43,12 +44,21 @@ class Postgres extends ICrud {
   }
 
   static async connect() {
-    const connection = new Sequelize("heroes", "admin", "admin", {
-      host: "192.168.99.100",
-      dialect: "postgres",
-      quoteIdentifiers: false,
+    // const connection = new Sequelize("heroes", "admin", "admin", {
+    //   host: "192.168.99.100",
+    //   dialect: "postgres",
+    //   quoteIdentifiers: false,
+    //   operatorsAliases: false,
+    //   logging: false
+    // });
+    const connection = new Sequelize(process.env.POSTGRES_URL, {
       operatorsAliases: false,
-      logging: false
+      logging: false,
+      quoteIdentifiers: false,
+      ssl: process.env.SSL_DB,
+      dialectOptions: {
+        ssl: process.env.SSL_DB
+      }
     });
     return connection;
   }

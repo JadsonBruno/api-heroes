@@ -4,6 +4,11 @@ const Boom = require("boom");
 const failAction = (request, headers, erro) => {
   throw erro;
 };
+
+const headers = Joi.object({
+  authorization: Joi.string().required()
+}).unknown();
+
 class HeroRoutes extends BaseRoute {
   constructor(db) {
     super();
@@ -30,7 +35,8 @@ class HeroRoutes extends BaseRoute {
             name: Joi.string()
               .min(3)
               .max(100)
-          }
+          },
+          headers
         }
       },
       handler: (request, headers) => {
@@ -56,6 +62,7 @@ class HeroRoutes extends BaseRoute {
         notes: "Should create a hero by name and power",
         validate: {
           failAction,
+          headers,
           payload: {
             name: Joi.string()
               .required()
@@ -96,6 +103,7 @@ class HeroRoutes extends BaseRoute {
           params: {
             id: Joi.string().required()
           },
+          headers,
           payload: {
             name: Joi.string()
               .min(3)
@@ -137,6 +145,7 @@ class HeroRoutes extends BaseRoute {
         notes: "ID must be valid",
         validate: {
           failAction,
+          headers,
           params: {
             id: Joi.string().required()
           }

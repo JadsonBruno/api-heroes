@@ -23,7 +23,7 @@ class MongoDB extends ICrud {
   }
   static connect() {
     Mongoose.connect(
-      "mongodb://jadson:password@192.168.99.100:27017/heroes",
+      process.env.MONGODB_URL,
       {
         useUnifiedTopology: true,
         useNewUrlParser: true
